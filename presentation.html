@@ -22,15 +22,22 @@
   </head>
   
   <style>
-    /* Your individual styles here, or just use inline styles if that’s
-       what you want. */
-    
+
+    .slides.template-default > article:not(.nobackground):not(.biglogo) {
+      background: url(images/bekk-logo-small.png) 710px 625px no-repeat;  
+      background-color: white;  
+    } 
+
+    .slides.template-default article.biglogo {
+      background: white url(images/bekk-logo.png) 50% 50% no-repeat;
+    }
+
     
   </style>
 
   <body style='display: none'>
 
-    <section class='slides layout-regular template-default'>
+    <section class='slides layout-regular template-bekk'>
       
       <!-- Your slides (<article>s) go here. Delete or comment out the
            slides below. -->
