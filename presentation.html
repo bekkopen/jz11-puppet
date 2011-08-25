@@ -282,7 +282,7 @@ service { ssh:
         </section>
       </article>
       <article>
-        <h3>sshd_config.erb</h3>
+        <h3>templates/sshd_config.erb</h3>
         <section>
 <pre>
 Port &lt;%= port %&gt;
@@ -342,8 +342,7 @@ modules/
       <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
-        <h3>Klasser</h3>
-        <p>Samlinger av ressurser. NB! Mer som moduler i OOP.
+        <h3>Klasser: Samlinger av ressurser (som moduler i OOP).</h3>
         <section>
           <pre>
 class nginx {
@@ -367,26 +366,120 @@ class nginx {
       <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
-        <h3>Kjør kode med moduler</h3>
+        <h3>Kjør kode med moduler, include module</h3>
         <section>
-          <pre>puppet apply --templatedir=modules templates_and_variables.pp</pre>
+          <pre>puppet apply --modulepath=modules -e 'include nginx'</pre>
         </section>
       </article>
 
-      <!-- ~~~~~~~~~~~~~~ -->
       <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
-        <h3>Kjør kode med templates</h3>
+        <h3>Opprette egne ressurstyper med define</h3>
         <section>
-          <pre>puppet apply --templatedir=templates templates_and_variables.pp</pre>
+<pre>define nginx::site($domain, $root) {
+  file { $root:
+    ensure  => directory,
+  }
+  file { "/etc/nginx/sites-available/${name}.conf":
+    ensure  => present,
+    content => template("nginx/site.conf.erb"),
+    require => File[$root],
+    notify  => Service[nginx],
+  }
+  file { "/etc/nginx/sites-enabled/${name}.conf":
+    ensure  => link,
+    target  => "/etc/nginx/sites-available/${name}.conf",
+    require => File["/etc/nginx/sites-available/${name}.conf"],
+    notify  => Service[nginx],
+  }
+}</pre>
         </section>
       </article>
 
       <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>nginx/templates/site.conf.erb</h3>
+        <section>
+          <pre>
+server {
+  listen 80;
+  server_name <%= domain %>;
+
+  access_log  /var/log/nginx/<%= name %>.access.log;
+
+  location / {
+    root <%= root %>;
+    index  index.html;
+  }
+}</pre>
+        </section>
+      </article>
+
       <!-- ~~~~~~~~~~~~~~ -->
 
-      puppet apply --modulepath=modules -e 'include nginx'
+      <article>
+        <h3>Klient / Server (puppet agent / puppet master)</h3>
+        <section>
+          <pre>
+manifests/
+  nodes.pp
+  site.pp
+modules/
+  ...
+templates/
+  ...</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>manifests/nodes.pp</h3>
+        <section>
+          <pre>
+node webserver {
+  include nginx
+  nginx::site { "muda":
+    domain => "www.muda.no",
+    root => "/var/www/muda.no",
+  }
+}
+node appserver {
+  include java
+  java::jetty::standalone { "example":
+    root => "/var/apps/example",
+  }
+}
+node "node1.muda.no" inherits webserver
+node "node2.muda.no" inherits appserver
+</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>Typisk klient / server oppsett</h3>
+        <ul>
+          <li>Én Puppet-master (server)</li>
+          <li>Mange Puppet-agenter (klienter) som henter konfigurasjon fra master over et REST API</li>
+          <li>SSL-sertifikatbasert autentisering. Agenter må signeres/godkjennes av Master</li>
+        </ul>
+      </article>
+
+      <article>
+        <p>Agenter har ikke tilgang til kildekoden for konfigurasjonen:</p>
+        <ol>
+          <li>Agent henter 'facts' om systemet sitt fra master</li>
+          <li>Agent forespør en konfigurasjonskatalog fra master</li>
+          <li>Master kompilerer kildekoden om til en konfigurasjonskatalog og sender til agent</li>
+          <li>Agent pakker opp konfigurasjonskatalogen som ender opp i kjørbar konfigurasjon</li>
+        </ol>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
 
 
       <article>
