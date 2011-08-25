@@ -5,7 +5,7 @@
 
   Authors: Luke Mahé (code)
            Marcin Wichary (code and design)
-           
+
            Dominic Mazzoni (browser compatibility)
            Charles Chen (ChromeVox support)
 
@@ -20,29 +20,28 @@
     <script
       src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
   </head>
-  
+
   <style>
 
     .slides.template-bekk > article:not(.nobackground):not(.biglogo) {
-      background: url(images/bekk-logo-small.png) 710px 625px no-repeat;  
-      background-color: white;  
-    } 
+      background: url(images/bekk-logo-small.png) 710px 625px no-repeat;
+      background-color: white;
+    }
 
     .slides.template-bekk article.biglogo {
       background: white url(images/puppet-logo-large.png) 50% 50% no-repeat;
     }
 
-    
+    q.small {
+      font-size: 1.1em;
+    }
+
+
   </style>
 
   <body style='display: none'>
 
     <section class='slides layout-regular template-bekk'>
-      
-      <!-- Your slides (<article>s) go here. Delete or comment out the
-           slides below. -->
-        
-        
 
       <article>
         <h1>
@@ -65,7 +64,7 @@
           Ole Christian Rynning
         </h4>
         <p>
-          TODO: Bring et. al.
+          Utvikler med erfaring fra drift. Automatisert systemarkitekturen til Bring Development Team med hjelp av Puppet.
         </p>
         <h4>
           Eivind Uggedal
@@ -78,6 +77,8 @@
         </p>
       </article>
 
+      <!-- ~~~~~~~~~~~~~~ -->
+
       <article>
         <h3>
           Deklarativ konfigurasjonsstyring
@@ -87,10 +88,15 @@
             Deklarativ fremfor imperativ
           </li>
           <li>
-            Kan gjenskape et mil&oslash; fra ethvert kjent utgangspunkt
+            Gjenskape et milj&oslash; fra ethvert kjent utgangspunkt
+          </li>
+          <li>
+            15 min
           </li>
         </ul>
       </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>
@@ -109,8 +115,10 @@
         </ul>
       </article>
 
+      <!-- ~~~~~~~~~~~~~~ -->
+
       <article>
-        <q>
+        <q class='small'>
           Infrastructure as code is a technique for treating infrastructure
           configuration in the same way as code; checking it into source
           control, then using it to push changes out to the data center.
@@ -120,9 +128,13 @@
         </div>
       </article>
 
+      <!-- ~~~~~~~~~~~~~~ -->
+
       <article class='biglogo'>
         <!-- puppet logo -->
       </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>
@@ -145,30 +157,256 @@
         </p>
       </article>
 
+      <!-- ~~~~~~~~~~~~~~ -->
+
       <article>
-        <h3>Resurser</h3>
+        <h3>Ressurser</h3>
         <p>
           Har <code>type</code>, <code>navn</code> og <code>parametere</code>
         </p>
         <section>
-        <pre>
+<pre>
 package { "nginx":
   ensure => present,
 }</pre>
         </section>
       </article>
-      
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
       <article>
-        <h2>Demo</h2>
+        <h3>Frittstående bruk</h3>
+        <section>
+          <pre>apt-get install puppet</pre>
+        </section>
+        <section>
+          <pre>
+cat &lt;&lt; EOX &gt;&gt; zsh.pp
+package { "zsh":
+  ensure => present,
+}
+EOX
+puppet apply zsh.pp</pre>
+        </section>
       </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>Ulike ressurstyper</h3>
+        <section>
+        <pre>
+group { "staff":
+  ensure => present,
+  gid    => 10,
+}
+
+user { "oc":
+  ensure => present,
+  gid    => 10,
+  uid    => 1337,
+  home   => "/home/oc",
+}
+
+cron { "poor-mans-http-ping":
+  command => "curl -s http://wasitup.com/ > /dev/null 2>&amp;1",
+  user    => "oc",
+  minute  => "*/1", # Sjekk hvert minutt
+}</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>Generiske ressurstyper</h3>
+        <p>Byggestener for å beskrive ressurser som ikke er default i OS.</p>
+        <section>
+          <pre>
+file { "/etc/timezone":
+  content => "Europe/Oslo\n",
+}
+
+exec { "reconfigure-tzdata":
+  command => "dpkg-reconfigure -f noninteractive tzdata",
+  path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+}</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>Avhengigheter mellom ressurser</h3>
+        <p><code>require</code> / <code>before</code> og <code>notify</code> / <code>subsribe</code>
+        <section>
+          <pre>
+file { "/etc/timezone":
+  content => "Europe/Oslo\n",
+  path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+}
+
+exec { "reconfigure-tzdata":
+  command => "dpkg-reconfigure -f noninteractive tzdata",
+  subscribe => File["/etc/timezone"],
+  require => File["/etc/timezone"],
+  refreshonly => true,
+}</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>Templater og variabler</h3>
+        <section>
+          <pre>
+$port = 22
+$allowed_users = ["eivind", "oc", "www-mgr"] # Tillat innlogging
+
+package { "openssh-server":
+  ensure => present,
+}
+
+file { "/etc/ssh/sshd_config":
+  content => template("sshd_config.erb"),
+  require => Package["openssh-server"],
+}
+
+service { ssh:
+  ensure    => running,
+  hasstatus => true,
+  subscribe => [Package["openssh-server"],
+                File["/etc/ssh/sshd_config"]],
+}</pre>
+        </section>
+      </article>
+      <article>
+        <h3>sshd_config.erb</h3>
+        <section>
+<pre>
+Port &lt;%= port %&gt;
+
+Protocol 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+UsePrivilegeSeparation yes
+
+StrictModes yes
+PubkeyAuthentication yes
+PermitRootLogin no
+PasswordAuthentication no
+
+&lt;% if allowed_users.any? %&gt;
+AllowUsers &lt;%= allowed_users.join(" ") %&gt;
+&lt;% end %&gt;
+
+...
+</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>Kjør kode med templates</h3>
+        <section>
+          <pre>puppet apply --templatedir=templates templates_and_variables.pp</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>Moduler</h3>
+        <p>Den foretrukne m&aring;ten &aring; strukturere konfigurasjon på er å plassere det i moduler.</p>
+        <section>
+<pre>
+modules/
+    nginx/
+      manifests/
+        init.pp
+      files/
+        nginx.conf
+      templates/
+        site.conf.erb
+    java/
+      manifests/
+        init.pp
+        development.pp
+        server.pp
+</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>Klasser</h3>
+        <p>Samlinger av ressurser. NB! Mer som moduler i OOP.
+        <section>
+          <pre>
+class nginx {
+  package { nginx:
+    ensure => present,
+  }
+  file { "/etc/nginx/nginx.conf":
+    source  => "puppet:///modules/nginx/nginx.conf",
+    require => Package[nginx],
+  }
+  service { nginx:
+    ensure    => running, enable => true,
+    pattern   => "nginx: master process",
+    subscribe => File["/etc/nginx/nginx.conf"],
+    require   => File["/etc/nginx/nginx.conf"],
+  }
+}</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>Kjør kode med moduler</h3>
+        <section>
+          <pre>puppet apply --templatedir=modules templates_and_variables.pp</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
+        <h3>Kjør kode med templates</h3>
+        <section>
+          <pre>puppet apply --templatedir=templates templates_and_variables.pp</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      puppet apply --modulepath=modules -e 'include nginx'
 
 
       <article>
-        <h2>
-          Example slide usage follows
-        </h2>
+        <h3>
+          Debugging av Puppet
+        </h3>
+        <p>
+          Master
+          <pre><code>puppet master --no-deamonize</pre></code>
+          Agents (files)
+          <pre><code>puppet --debug --verbose file.pp
+puppet --parseonly file.pp</pre></code>
+          Configurations
+<pre><code>notice("The value is: ${yourvar}")   # Notice the master
+notify{"The value is: ${yourvar}": } # Notify to client</pre></code>
+
+        </p>
       </article>
-      
+
+<!--
       <article>
         <p>
           This is a slide with just text. This is a slide with just text.
@@ -178,6 +416,11 @@ package { "nginx":
         <p>
           There is more text just underneath.
         </p>
+      </article>
+
+
+      <article>
+        <h2>Demo</h2>
       </article>
 
       <article>
@@ -275,7 +518,7 @@ package { "nginx":
         <h3>
           Slide with a table
         </h3>
-        
+
         <table>
           <tr>
             <th>
@@ -294,12 +537,12 @@ package { "nginx":
               The Michael Bay of Doodles
         </table>
       </article>
-      
+
       <article class='smaller'>
         <h3>
           Slide with a table (smaller text)
         </h3>
-        
+
         <table>
           <tr>
             <th>
@@ -318,7 +561,7 @@ package { "nginx":
               The Michael Bay of Doodles
         </table>
       </article>
-      
+
       <article>
         <h3>
           Styles
@@ -340,7 +583,7 @@ package { "nginx":
             <b>bold</b> and <i>italic</i>
         </ul>
       </article>
-      
+
       <article>
         <h2>
           Segue slide
@@ -406,7 +649,7 @@ package { "nginx":
 </pre>
         </section>
       </article>
-      
+
       <article class='smaller'>
         <h3>
           This slide has some code (small font)
@@ -430,7 +673,7 @@ package { "nginx":
 </pre>
         </section>
       </article>
-      
+
       <article>
         <q>
           The best way to predict the future is to invent it.
@@ -439,22 +682,22 @@ package { "nginx":
           Alan Kay
         </div>
       </article>
-      
+
       <article class='smaller'>
         <q>
-          A distributed system is one in which the failure of a computer 
+          A distributed system is one in which the failure of a computer
           you didn’t even know existed can render your own computer unusable.
         </q>
         <div class='author'>
           Leslie Lamport
         </div>
       </article>
-      
+
       <article class='nobackground'>
         <h3>
           A slide with an embed + title
         </h3>
-        
+
         <iframe src='http://www.google.com/doodle4google/history.html'></iframe>
       </article>
 
@@ -468,18 +711,18 @@ package { "nginx":
         </h3>
         <iframe src='http://www.google.com/doodle4google/history.html'></iframe>
       </article>
-      
+
       <article>
         <h3>
           Thank you!
         </h3>
-        
+
         <ul>
           <li>
             <a href='http://www.google.com'>google.com</a>
         </ul>
       </article>
-
+-->
     </section>
 
   </body>
