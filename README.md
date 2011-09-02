@@ -16,6 +16,31 @@ Then invoke puppet:
     puppet apply --modulepath=modules demo.pp
 
 
+Presenation Outline
+-------------------
+
+Intro(~10 min)
+
+* Kort om egne erfaringer (Bring, Wasitup, mediaqueri.es)
+* Deklarativ konfigurasjonsstyring 
+* Hvorfor og økosystem
+
+Puppet (~30 min)
+
+* Puppets Arkitektur - resource providers - OS-støtte (Debian, Ubuntu, Red Hat, SuSE, Gentoo, Solaris, FreeBSD, OS X & Windows!) - reproduserbar, idempotent konfigurasjon - sentralisert (master/agent)
+* Hvorfor Puppet (mange andre som bruker det...) og alternativer (Chef, Kokki, Cfengine, ...)
+* Grunnstenene (Ressurs-orientering) - den hellige treenighet - file, package, service - Avhengighet (requires, depends) - Andre ressurser: exec, user, group, ssh
+* Klasser og definisjoner (Arv og OO-modell)
+* Moduler og komposisjonering
+* Hvordan deploye JVM-applikasjoner i slike miljøer (Jetty: Java, Scala, Clojure)
+
+Demo (~10 min)
+
+* provisjonering av miljø og deploy av JVM-applikasjoner
+
+- Spørsmål (10 min) 
+
+
 TODO
 ----
 
