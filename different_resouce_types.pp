@@ -6,6 +6,5 @@ user { "oc":
 
 cron { "poor-mans-http-ping":
   command => "curl -s http://demo.muda.no/ > /dev/null 2>&1",
-  user    => "oc",
   minute  => "*/1", # Sjekk hvert minutt
 }
