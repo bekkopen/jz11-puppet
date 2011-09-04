@@ -520,12 +520,12 @@ node "app2.muda.no" inherits appserver
           Debugging av Puppet
         </h3>
         <p>
-          Master
+          Start master med:
           <pre><code>puppet master --no-deamonize</pre></code>
-          Agents (files)
+          Start agenter med:
           <pre><code>puppet --debug --verbose file.pp
 puppet --parseonly file.pp</pre></code>
-          Configurations
+          Log fra manifest filer:
 <pre><code>notice("The value is: ${yourvar}")   # Log til master
 notify{"The value is: ${yourvar}": } # Log til klient</pre></code>
 
