@@ -21,7 +21,7 @@ node 'app1.muda.no' {
   include postgresql::server
 
   postgresql::database { "demo":
-    user => "demo",
+    owner => "demo",
   }
 
   package { "openjdk-6-jre":
