@@ -73,8 +73,6 @@
         </p>
       </article>
 
-      <!-- ~~~~~~~~~~~~~~ -->
-
       <article>
         <h3>
           Infrastruktur som kode
@@ -85,8 +83,6 @@
           </li>
         </ul>
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>
@@ -123,8 +119,6 @@ file { "/etc/vim/vimrc":
 </div>
 
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>
@@ -169,8 +163,6 @@ file { "/etc/vim/vimrc":
         </ul>
       </article>
 
-      <!-- ~~~~~~~~~~~~~~ -->
-
       <article style="background: url(images/puppets.jpg) 0 0 no-repeat;">
         <h1 style="color: #fff; margin-top: 50px;">
           Puppet
@@ -179,8 +171,6 @@ file { "/etc/vim/vimrc":
           Source: http://flic.kr/p/6qy7W2
         </div>
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>
@@ -216,8 +206,6 @@ file { "/etc/vim/vimrc":
         </dl>
       </article>
 
-      <!-- ~~~~~~~~~~~~~~ -->
-
       <article>
         <h3>Ressurser</h3>
         <p>
@@ -230,8 +218,6 @@ package { "zsh":
 }</pre>
         </section>
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>Frittstående bruk</h3>
@@ -248,8 +234,6 @@ EOX
 puppet apply zsh.pp</pre>
         </section>
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>Ulike ressurstyper</h3>
@@ -270,8 +254,6 @@ cron { "poor-mans-http-ping":
         </section>
       </article>
 
-      <!-- ~~~~~~~~~~~~~~ -->
-
       <article>
         <h3>Generiske ressurstyper</h3>
         <p>
@@ -289,8 +271,6 @@ exec { "reconfigure-tzdata":
 }</pre>
         </section>
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>Avhengigheter mellom ressurser</h3>
@@ -312,8 +292,6 @@ exec { "reconfigure-tzdata":
 File["/etc/timezone"] ->  Exec["reconfigure-tzdata"]</pre>
         </section>
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>Templater og variabler</h3>
@@ -363,16 +341,12 @@ AllowUsers &lt;%= allowed_users.join(" ") %&gt;
         </section>
       </article>
 
-      <!-- ~~~~~~~~~~~~~~ -->
-
       <article>
         <h3>Kjør kode med templates</h3>
         <section>
           <pre>puppet apply --templatedir=templates templates_and_variables.pp</pre>
         </section>
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>Klasser: samlinger av ressurser (singleton).</h3>
@@ -397,8 +371,6 @@ class nginx {
         </section>
       </article>
 
-      <!-- ~~~~~~~~~~~~~~ -->
-
       <article>
         <h3>Moduler</h3>
         <p>Den foretrukne m&aring;ten &aring; strukturere konfigurasjon på er å plassere det i moduler.</p>
@@ -421,8 +393,6 @@ modules/
         </section>
       </article>
 
-      <!-- ~~~~~~~~~~~~~~ -->
-
       <article>
         <h3>Bruk av klasser</h3>
         <section>
@@ -434,8 +404,6 @@ modules/
           <pre>puppet apply --modulepath=modules nginx.pp</pre>
         </section>
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>Opprette egne ressurstyper med define</h3>
@@ -459,8 +427,6 @@ modules/
 }</pre>
         </section>
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>nginx/templates/site.conf.erb</h3>
@@ -490,8 +456,6 @@ server {
         </section>
       </article>
 
-      <!-- ~~~~~~~~~~~~~~ -->
-
       <article>
         <h3>Klient / Server (puppet agent / puppet master)</h3>
         <section>
@@ -505,8 +469,6 @@ templates/
   ...</pre>
         </section>
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
         <h3>manifests/nodes.pp</h3>
@@ -531,8 +493,6 @@ node "node2.muda.no" inherits appserver
         </section>
       </article>
 
-      <!-- ~~~~~~~~~~~~~~ -->
-
       <article>
         <h3>Typisk klient / server oppsett</h3>
         <ul>
@@ -551,8 +511,6 @@ node "node2.muda.no" inherits appserver
           <li>Agent pakker opp konfigurasjonskatalogen som ender opp i kjørbar konfigurasjon</li>
         </ol>
       </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
 
       <article style="background: url(images/juggler.jpg) 0 0 no-repeat;">
         <h1 style="color: #fff; margin-top: 50px;">
