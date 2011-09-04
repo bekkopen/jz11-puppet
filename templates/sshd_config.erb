@@ -8,7 +8,6 @@ UsePrivilegeSeparation yes
 StrictModes yes
 PubkeyAuthentication yes
 PermitRootLogin no
-PasswordAuthentication yes
 
 <% if allowed_users.any? %>
 AllowUsers <%= allowed_users.join(" ") %>
