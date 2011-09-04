@@ -226,21 +226,14 @@ puppet apply zsh.pp</pre>
         <h3>Ulike ressurstyper</h3>
         <section>
         <pre>
-group { "staff":
-  ensure => present,
-  gid    => 10,
-}
-
 user { "oc":
   ensure => present,
-  gid    => 10,
   uid    => 1337,
   home   => "/home/oc",
 }
 
 cron { "poor-mans-http-ping":
   command => "curl -s http://wasitup.com/ > /dev/null 2>&amp;1",
-  user    => "oc",
   minute  => "*/1", # Sjekk hvert minutt
 }</pre>
         </section>
