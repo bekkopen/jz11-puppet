@@ -1,21 +1,34 @@
-include nginx
+node 'web1.muda.no' {
+  include nginx
 
-$www_root = "/var/www/jz11"
+  $www_root = "/var/www/demo"
 
-file { $www_root:
-  ensure => directory,
+  file { $www_root:
+    ensure => directory,
+  }
+
+  nginx::site { "demo":
+    domain => "www.muda.no",
+    root => $www_root,
+    upstreams => ["app1.muda.no:9000"],
+  }
+
+  Class["nginx"] -> File[$www_root] -> Nginx::Site["demo"]
 }
 
-nginx::site { "jz11":
-  domain => "jz11.muda.no",
-  root => $www_root,
-  upstreams => ["localhost:8080"],
+node 'app1.muda.no' {
+
+  include postgresql::server
+
+  postgresql::database { "demo":
+    user => "demo",
+  }
+
+  package { "openjdk-6-jre":
+    ensure => present,
+  }
+
+  # TODO: install and configure Jetty
 }
 
-Class["nginx"] -> File[$www_root] -> Nginx::Site["jz11"]
 
-# Install Java
-#package { "openjdk-6-jre":
-#}
-
-# TODO: install and configure Jetty
