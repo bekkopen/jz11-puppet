@@ -541,8 +541,8 @@ node "node2.muda.no" inherits appserver
           <pre><code>puppet --debug --verbose file.pp
 puppet --parseonly file.pp</pre></code>
           Configurations
-<pre><code>notice("The value is: ${yourvar}")   # Notice the master
-notify{"The value is: ${yourvar}": } # Notify to client</pre></code>
+<pre><code>notice("The value is: ${yourvar}")   # Log til master
+notify{"The value is: ${yourvar}": } # Log til klient</pre></code>
 
         </p>
       </article>
