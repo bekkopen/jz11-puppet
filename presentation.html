@@ -369,7 +369,7 @@ modules/
       <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
-        <h3>Klasser: Samlinger av ressurser (som moduler i OOP).</h3>
+        <h3>Klasser: Samlinger av ressurser (singleton).</h3>
         <section>
           <pre>
 class nginx {
@@ -393,9 +393,14 @@ class nginx {
       <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
+        <h3>Bruk av klasser</h3>
+        <section>
+          <pre>include nginx</pre>
+        </section>
+
         <h3>Kjør kode med moduler</h3>
         <section>
-          <pre>puppet apply --modulepath=modules -e 'include nginx'</pre>
+          <pre>puppet apply --modulepath=modules nginx.pp</pre>
         </section>
       </article>
 
