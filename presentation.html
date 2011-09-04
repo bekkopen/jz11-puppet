@@ -458,8 +458,17 @@ server {
 
       <article>
         <h3>Klient / Server (puppet agent / puppet master)</h3>
+        <ul>
+          <li>Én Puppet-master (server)</li>
+          <li>Mange Puppet-agenter (klienter) som henter konfigurasjon fra master over et REST API</li>
+          <li>SSL-sertifikatbasert autentisering. Agenter må signeres/godkjennes av Master</li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>Typisk klient / server oppsett</h3>
         <section>
-          <h1>INSERT DIAGRAM HERE</h1>
+          <img src="images/puppet-arch.png">
         </section>
       </article>
 
@@ -485,15 +494,6 @@ node "app1.muda.no" inherits appserver
 node "app2.muda.no" inherits appserver
 </pre>
         </section>
-      </article>
-
-      <article>
-        <h3>Typisk klient / server oppsett</h3>
-        <ul>
-          <li>Én Puppet-master (server)</li>
-          <li>Mange Puppet-agenter (klienter) som henter konfigurasjon fra master over et REST API</li>
-          <li>SSL-sertifikatbasert autentisering. Agenter må signeres/godkjennes av Master</li>
-        </ul>
       </article>
 
       <article>
