@@ -1,11 +1,5 @@
-group { "staff":
-  ensure => present,
-  gid    => 10,
-}
-
 user { "oc":
   ensure => present,
-  gid    => 10,
   uid    => 1337,
   home   => "/home/oc",
 }
