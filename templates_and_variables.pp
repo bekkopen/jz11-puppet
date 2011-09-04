@@ -1,5 +1,5 @@
 $port = 22
-$allowed_users = ["root", "eivind", "oc", "www-mgr"] # Tillat innlogging
+$allowed_users = ["eivind", "oc"] # Tillat innlogging
 
 package { "openssh-server":
   ensure => present,
