@@ -374,30 +374,6 @@ AllowUsers &lt;%= allowed_users.join(" ") %&gt;
       <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
-        <h3>Moduler</h3>
-        <p>Den foretrukne m&aring;ten &aring; strukturere konfigurasjon på er å plassere det i moduler.</p>
-        <section>
-<pre>
-modules/
-    nginx/
-      manifests/
-        init.pp
-      files/
-        nginx.conf
-      templates/
-        site.conf.erb
-    java/
-      manifests/
-        init.pp
-        development.pp
-        server.pp
-</pre>
-        </section>
-      </article>
-
-      <!-- ~~~~~~~~~~~~~~ -->
-
-      <article>
         <h3>Klasser: samlinger av ressurser (singleton).</h3>
         <section>
           <pre>
@@ -423,6 +399,30 @@ class nginx {
       <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
+        <h3>Moduler</h3>
+        <p>Den foretrukne m&aring;ten &aring; strukturere konfigurasjon på er å plassere det i moduler.</p>
+        <section>
+<pre>
+modules/
+    nginx/
+      manifests/
+        init.pp
+      files/
+        nginx.conf
+      templates/
+        site.conf.erb
+    java/
+      manifests/
+        init.pp
+        development.pp
+        server.pp
+</pre>
+        </section>
+      </article>
+
+      <!-- ~~~~~~~~~~~~~~ -->
+
+      <article>
         <h3>Bruk av klasser</h3>
         <section>
           <pre>include nginx</pre>
@@ -437,7 +437,7 @@ class nginx {
       <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
-        <h3>Opprette egne ressurstyper med define</h3>
+        <h3>Opprette egendefinerte ressurstyper med define</h3>
         <section>
 <pre>define nginx::site($domain, $root) {
   file { $root:
