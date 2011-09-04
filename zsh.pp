@@ -1,3 +1,3 @@
-package { "nginx":
+package { "zsh":
   ensure => present,
 }

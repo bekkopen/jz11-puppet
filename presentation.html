@@ -196,7 +196,7 @@ file { "/etc/vim/vimrc":
         </p>
         <section>
 <pre>
-package { "nginx":
+package { "zsh":
   ensure => present,
 }</pre>
         </section>
@@ -211,12 +211,12 @@ package { "nginx":
         </section>
         <section>
           <pre>
-cat &lt;&lt; EOX &gt;&gt; nginx.pp
-package { "nginx":
+cat &lt;&lt; EOX &gt;&gt; zsh.pp
+package { "zsh":
   ensure => present,
 }
 EOX
-puppet apply nginx.pp</pre>
+puppet apply zsh.pp</pre>
         </section>
       </article>
 
