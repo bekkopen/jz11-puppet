@@ -381,7 +381,8 @@ class nginx {
     require => Package[nginx],
   }
   service { nginx:
-    ensure    => running, enable => true,
+    ensure    => running,
+    enable    => true,
     pattern   => "nginx: master process",
     subscribe => File["/etc/nginx/nginx.conf"],
     require   => File["/etc/nginx/nginx.conf"],
