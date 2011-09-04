@@ -480,8 +480,9 @@ node appserver {
     root => "/var/apps/example",
   }
 }
-node "node1.muda.no" inherits webserver
-node "node2.muda.no" inherits appserver
+node "web1.muda.no" inherits webserver
+node "app1.muda.no" inherits appserver
+node "app2.muda.no" inherits appserver
 </pre>
         </section>
       </article>
