@@ -309,6 +309,9 @@ exec { "reconfigure-tzdata":
   refreshonly => true,
   path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
 }</pre>
+
+          <pre>
+File["/etc/timezone"] ->  Exec["reconfigure-tzdata"]</pre>
         </section>
       </article>
 
