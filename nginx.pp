@@ -1,0 +1,3 @@
+package { "nginx":
+  ensure => present,
+}

@@ -211,12 +211,12 @@ package { "nginx":
         </section>
         <section>
           <pre>
-cat &lt;&lt; EOX &gt;&gt; zsh.pp
-package { "zsh":
+cat &lt;&lt; EOX &gt;&gt; nginx.pp
+package { "nginx":
   ensure => present,
 }
 EOX
-puppet apply zsh.pp</pre>
+puppet apply nginx.pp</pre>
         </section>
       </article>
 
@@ -250,7 +250,10 @@ cron { "poor-mans-http-ping":
 
       <article>
         <h3>Generiske ressurstyper</h3>
-        <p>Byggestener for å beskrive ressurser som ikke er default i OS.</p>
+        <p>
+          Byggestener for å beskrive ressurser som ikke er
+          innebygd i Puppet.
+        </p>
         <section>
           <pre>
 file { "/etc/timezone":
@@ -396,7 +399,7 @@ class nginx {
       <!-- ~~~~~~~~~~~~~~ -->
 
       <article>
-        <h3>Kjør kode med moduler, include module</h3>
+        <h3>Kjør kode med moduler</h3>
         <section>
           <pre>puppet apply --modulepath=modules -e 'include nginx'</pre>
         </section>
@@ -435,14 +438,24 @@ class nginx {
           <pre>
 server {
   listen 80;
-  server_name <%= domain %>;
+  server_name &lt;%= domain %&gt;;
 
-  access_log  /var/log/nginx/<%= name %>.access.log;
+  access_log  /var/log/nginx/&lt;%= name %&gt;.access.log;
 
   location / {
-    root <%= root %>;
+    root &lt;%= root %&gt;;
     index  index.html;
   }
+}</pre>
+        </section>
+      </article>
+
+      <article>
+        <h3>Bruk av egne ressurstyper</h3>
+        <section>
+<pre>nginx::site { "demo":
+  domain => "demo.muda.no",
+  root => "/var/www/muda",
 }</pre>
         </section>
       </article>
