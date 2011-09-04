@@ -91,6 +91,28 @@
             Gjenskape et milj&oslash; fra ethvert kjent utgangspunkt
           </li>
         </ul>
+<div style="width: 55%; float:left; margin-right: 5%;">
+<pre>
+apt-get install vim
+
+echo "set nocp" > /etc/vim/vimrc</pre>
+<pre>
+yum install vim
+
+echo "set nocp" > /etc/vim/vimrc</pre>
+</div>
+
+<div style="width: 40%; float:left;">
+<pre>
+package { "vim":
+  ensure => present,
+}
+
+file { "/etc/vim/vimrc":
+  content => "set nocp",
+}</pre>
+</div>
+
       </article>
 
       <!-- ~~~~~~~~~~~~~~ -->
