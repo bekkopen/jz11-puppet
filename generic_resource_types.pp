@@ -3,6 +3,5 @@ file { "/etc/timezone":
 }
 
 exec { "reconfigure-tzdata":
-  command => "dpkg-reconfigure -f noninteractive tzdata",
-  path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+  command => "/usr/sbin/dpkg-reconfigure -f noninteractive tzdata",
 }
