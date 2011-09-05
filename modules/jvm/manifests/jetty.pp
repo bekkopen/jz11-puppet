@@ -19,6 +19,10 @@ define jvm::jetty($secret,
   $exec_jar="${appdir}/${name}.jar"
 
   if $ensure == 'present' {
+    file { $prefix:
+      ensure => directory,
+    }  
+  
     file { $workdir:
       ensure => directory,
       owner => $owner,
