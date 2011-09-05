@@ -565,8 +565,9 @@ node webserver {
 }
 node appserver {
   include java
-  java::jetty::standalone { "example":
-    root => "/var/apps/example",
+  jvm::jetty { "example":
+    secret => "fe9dee1f3a0c22dfff0aec9838f7e70e",
+    port => 9000,
   }
 }
 node "web1.muda.no" inherits webserver
