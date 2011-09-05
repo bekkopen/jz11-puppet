@@ -660,7 +660,59 @@ node "app2.muda.no" inherits appserver
           Source: http://flic.kr/p/2fiWvK
         </div>
       </article>
+      
+      <article>
+        <h1>
+          TODO:
+        </h1>
+        <p>
+          * Deploy RSVP applikasjon
+          * 3 servere: 
+            - mgmt (master, nexus, ...)
+            - web1 (nginx)
+            - app1 (jetty exec)          
+        </p>
+      </article>
+      
+      <article>
+        <h1>
+          Bootstrappe mgmt
+        </h1>
+        <p>
+          * Har installert puppetmaster og git
+          * Ingen java og ingen nexus
+          * Bootstrap
+          * java &amp; nexus -> kan bygge og deploye demo
+        </p>
+      </article>
 
+      <article>
+        <h1>
+          Bootstrappe web1
+        </h1>
+        <p>
+          * Har allerede installert puppet
+          * cert request
+          * godkjenne cert
+          * Ingen webserver 
+          * Bootstrap
+          * Webserver, bad gateway..
+        </p>
+      </article>
+      
+      <article>
+        <h1>
+          Bootstrappe app1
+        </h1>
+        <p>
+          * Har allerede installert puppet
+          * Ingen java 
+          * Bootstrap
+          * deploy app (pull fra nexus)
+          * Vis applikasjon, lag event, registrer to deltakere                    
+        </p>
+      </article>
+      
       <!--
       <article>
         <h3>
@@ -680,12 +732,6 @@ notify{"The value is: ${yourvar}": } # Log til klient</pre></code>
       </article>
       -->
 
-      <article style="background: url(images/question.jpg) 0 0 no-repeat;">
-        <div class='source'>
-          Source: http://flic.kr/p/ubG6g
-        </div>
-      </article>
-
       <article>
         <h1>
           Slides og kode
@@ -695,6 +741,12 @@ notify{"The value is: ${yourvar}": } # Log til klient</pre></code>
             github.com/bekkopen/jz11-puppet
           </a>
         </p>
+      </article>
+
+      <article style="background: url(images/question.jpg) 0 0 no-repeat;">
+        <div class='source'>
+          Source: http://flic.kr/p/ubG6g
+        </div>
       </article>
 
   </body>
