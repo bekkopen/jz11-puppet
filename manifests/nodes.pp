@@ -1,9 +1,3 @@
-import "jvm"
-import "nginx"
-import "postgresql"
-import "users"
-import "common"
-
 node default {
 	include users::admins
 	include common::git
@@ -29,7 +23,7 @@ node 'app1.muda.no' inherits default {
 		secret => "7a5cfa77a46c2fd9d2224ecb5261df86",
 	}
 
-  import postgresql::server
+  include postgresql::server
 
   postgresql::database { "demo":
     owner => "demo",
