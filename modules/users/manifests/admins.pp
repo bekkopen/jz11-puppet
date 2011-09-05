@@ -26,5 +26,12 @@ class users::admins {
         user  => oc,
         type  => "ssh-rsa",
     }
+
+    ssh_authorized_key { "eivind@uggedal.com":
+        ensure  => present,
+        key => "AAAAB3NzaC1yc2EAAAABIwAAAQEAy1ZWC+AumwZB9HKcpVb06Ci6Z/l4mu8VeKJ9boMtK481zQ1bgu5MLYxkUmE4L75ePggz/m7ikUNMcjof0tJOVgy8+fxsdwYeYDb7wnZiBT4TpvjKW4hD9tlmS/nDviI1pVHuQgBvrGBy05cmHKCYYcWtKnHszpw/5E3WAJWOw1DJBFTAFVwOzjbzzXyHJjT/tbpfuBhIsk+gPhpq94tfQ4zUu4DRQTdGXfVtg5C3Fz9abNAP8wcQj03/nZrkNB5w/iE9g+fw2X1HFYEkOr1nGkwk7d/9CD3rijQgXXe6zEjdWUUASbWgQvUpPjnTVTfuGm1OfPhhDsE/L9EfG+RBMQ==",
+        user  => eivind,
+        type  => "ssh-rsa",
+    }
     
 }
