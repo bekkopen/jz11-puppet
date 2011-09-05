@@ -10,6 +10,11 @@ if [[ -z $NEWHOSTNAME ]]; then
   exit 1
 fi
 
+if [[ -f /etc/puppet/initialized ]]; then
+	echo "ERROR: Already initialized"
+	exit 1
+fi
+
 SQUEEZE_REPO="deb http://ukdebian.mirror.anlx.net/debian/ squeeze main contrib"
 
 echo $SQUEEZE_REPO > /etc/apt/sources.list
@@ -35,6 +40,9 @@ if [[ -z "$(grep bekkopen/jz11-puppet.git /etc/puppet/.git/config)" ]]; then
   cd -
 fi
 
-# Do more stuff...
+echo "server=mgmt.muda.no" >> /etc/puppet/puppet.conf
+echo "trace=true" >> /etc/puppet/puppet.conf
+
+touch /etc/puppet/initialized
 
 exit 0

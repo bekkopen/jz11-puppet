@@ -10,6 +10,11 @@ if [[ -z $NEWHOSTNAME ]]; then
   exit 1
 fi
 
+if [[ -f /etc/puppet/initialized ]]; then
+	echo "ERROR: Already initialized"
+	exit 1
+fi
+
 SQUEEZE_REPO="deb http://ukdebian.mirror.anlx.net/debian/ squeeze main contrib"
 
 echo $SQUEEZE_REPO > /etc/apt/sources.list
@@ -25,3 +30,8 @@ echo $NEWHOSTNAME > /etc/hostname && hostname -F /etc/hostname
 echo $PUBLIC_IP_ADDRESS `hostname` `hostname -s` >> /etc/hosts
 
 apt-get -qq update && apt-get -qq -y install puppet
+
+echo "server=mgmt.muda.no" >> /etc/puppet/puppet.conf
+echo "trace=true" >> /etc/puppet/puppet.conf
+
+touch /etc/puppet/initialized
