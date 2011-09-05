@@ -28,12 +28,13 @@ node 'app1.muda.no' inherits default {
 		port => 9000, 
 		secret => "7a5cfa77a46c2fd9d2224ecb5261df86",
 	}
-    # TODO: insert postgres here...
+
+    postgresql::database { "demo":
+      owner => "demo",
+    }
 }
 
 node 'mgmt.muda.no' inherits default {
-
 	include jvm::jdk
-	include jvm::nginx
-
+	include jvm::nexus
 }
