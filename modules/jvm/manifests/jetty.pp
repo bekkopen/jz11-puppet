@@ -33,7 +33,7 @@ define jvm::jetty($secret,
    
     file { "/etc/init.d/${name}":
       ensure => present,
-      content => template("jetty.sh.erb"),
+      content => template("jvm/jetty.sh.erb"),
       notify => Service["${name}"],
       owner => root,
       group => root,
