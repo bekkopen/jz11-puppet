@@ -8,12 +8,13 @@ define jvm::jetty($secret,
                   $ensure="present",
                   $run_prefix="/var/run",
                   $log_prefix="/var/log",
+                  $cache_prefix="/var/cache"
                   $jvm_args=[]) {
 
 			notice("dbg: ${run_prefix} ... ${name}")
 
   $pidfile="${run_prefix}/${name}.pid"
-  $workdir="${log_prefix}/${name}"
+  $workdir="${cache_prefix}/${name}"
   $logdir="${log_prefix}/${name}"
   $appdir="${prefix}/${name}"
   $exec_jar="${appdir}/${name}.jar"
@@ -22,8 +23,14 @@ define jvm::jetty($secret,
     file { $prefix:
       ensure => directory,
     }  
-  
+
     file { $workdir:
+      ensure => directory,
+      owner => $owner,
+      group => $group,
+    }
+
+    file { $logdir:
       ensure => directory,
       owner => $owner,
       group => $group,
@@ -34,7 +41,7 @@ define jvm::jetty($secret,
       owner => $owner,
       group => $group,
     }
-   
+
     file { "/etc/init.d/${name}":
       ensure => present,
       content => template("jvm/jetty.sh.erb"),
@@ -49,7 +56,7 @@ define jvm::jetty($secret,
       hasstatus => true,
       require => File["/etc/init.d/${name}"],
     }
-    
+
   } elsif $ensure == 'absent' {
     service { $name:
       ensure => stopped,
