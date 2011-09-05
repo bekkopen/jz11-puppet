@@ -5,6 +5,15 @@
 # bash < <(curl -s https://github.com/bekkopen/jz11-puppet/raw/master/init/master.sh)
 #
 
+SQUEEZE_REPO="deb http://ukdebian.mirror.anlx.net/debian/ squeeze main contrib"
+
+echo $SQUEEZE_REPO > /etc/apt/sources.list
+cat > /etc/apt/apt.conf << 'EOF'
+APT {
+  Install-Recommends "false";
+};
+EOF
+
 PUBLIC_IP_ADDRESS=`ifconfig eth0 | awk -F':' '/inet addr/{split($2,_," ");print _[1]}'`
 
 echo "Hostname (FQDN):"
