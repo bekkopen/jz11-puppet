@@ -8,7 +8,7 @@ define jvm::jetty($secret,
                   $ensure="present",
                   $run_prefix="/var/run",
                   $log_prefix="/var/log",
-                  $cache_prefix="/var/cache"
+                  $cache_prefix="/var/cache",
                   $jvm_args=[]) {
 
 			notice("dbg: ${run_prefix} ... ${name}")
