@@ -283,14 +283,11 @@ file { "/etc/timezone":
 
 exec { "reconfigure-tzdata":
   command => "/usr/sbin/dpkg-reconfigure -f noninteractive tzdata",
-  subscribe => File["/etc/timezone"],
   require => File["/etc/timezone"],
-  refreshonly => true,
 }</pre>
 
           <pre>
 File["/etc/timezone"] ->  Exec["reconfigure-tzdata"] # requirrequire
-File["/etc/timezone"] ~>  Exec["reconfigure-tzdata"] # subscribe</pre>
         </section>
       </article>
 
