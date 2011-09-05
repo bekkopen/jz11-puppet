@@ -232,11 +232,13 @@ package { "zsh":
         </section>
         <section>
           <pre>
-cat &lt;&lt; EOX &gt;&gt; zsh.pp
+# zsh.pp
 package { "zsh":
   ensure => present,
-}
-EOX
+}</pre>
+        </section>
+        <section>
+          <pre>
 puppet apply zsh.pp</pre>
         </section>
       </article>
