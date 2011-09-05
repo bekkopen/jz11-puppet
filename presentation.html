@@ -585,9 +585,8 @@ node "app2.muda.no" inherits appserver
       <article>
         <p>Agenter har ikke tilgang til kildekoden for konfigurasjonen:</p>
         <ol>
-          <li>Agent henter 'facts' om systemet sitt fra master</li>
-          <li>Agent forespør en konfigurasjonskatalog fra master</li>
-          <li>Master kompilerer kildekoden om til en konfigurasjonskatalog og sender til agent</li>
+          <li>Agent identifiserer seg og forespør en konfigurasjonskatalog fra master</li>
+          <li>Master kompilerer en oppdatert konfigurasjonskatalog og sender til agent</li>
           <li>Agent pakker opp konfigurasjonskatalogen som ender opp i kjørbar konfigurasjon</li>
         </ol>
       </article>
