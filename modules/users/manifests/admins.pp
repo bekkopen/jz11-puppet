@@ -10,12 +10,12 @@ class users::admins {
         password   => '$6$xSZZx34H$7Wv2cIRg/MP2BGGp64OOmjxL6vxfl2QxNsmsRylxWsyA4maIp20lot3rw76Bl75DXfqltqDQUwNNWmHSTlEuJ/',
     }
     
-    user { "uggedal":
+    user { "eivind":
         ensure     => present,
         uid        => 1338,
         gid        => users,
         groups     => ["adm", "sudo"],    
-        home       => "/home/uggedal",
+        home       => "/home/eivind",
         managehome => true,
         password   => '$6$xSZZx34H$7Wv2cIRg/MP2BGGp64OOmjxL6vxfl2QxNsmsRylxWsyA4maIp20lot3rw76Bl75DXfqltqDQUwNNWmHSTlEuJ/',
     }
