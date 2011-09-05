@@ -15,7 +15,7 @@ echo $PUBLIC_IP_ADDRESS `hostname` `hostname -s` >> /etc/hosts
 
 apt-get -qq update && apt-get -qq -y install puppetmaster puppet git-core
 
-if [[ -z "$(grep bring/puppet.git /etc/puppet/.git/config)" ]]; then
+if [[ -z "$(grep bekkopen/jz11-puppet.git /etc/puppet/.git/config)" ]]; then
   test -d /etc/puppet && mv /etc/puppet /etc/puppet.orig
   git clone https://github.com/bekkopen/jz11-puppet /etc/puppet
   cd /etc/puppet
