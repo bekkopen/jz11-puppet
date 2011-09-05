@@ -29,9 +29,11 @@ node 'app1.muda.no' inherits default {
 		secret => "7a5cfa77a46c2fd9d2224ecb5261df86",
 	}
 
-    postgresql::database { "demo":
-      owner => "demo",
-    }
+  import postgresql::server
+
+  postgresql::database { "demo":
+    owner => "demo",
+  }
 }
 
 node 'mgmt.muda.no' inherits default {
