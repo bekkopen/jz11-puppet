@@ -22,7 +22,7 @@ read HOSTNAME
 echo $HOSTNAME > /etc/hostname && hostname -F /etc/hostname
 echo $PUBLIC_IP_ADDRESS `hostname` `hostname -s` >> /etc/hosts
 
-apt-get -qq update && apt-get -qq -y install puppet
+apt-get -qq update && apt-get -qq -y install puppet git-core
 
 git clone https://github.com/bekkopen/jz11-puppet /root/jz-puppet
 cd /root/jz-puppet
