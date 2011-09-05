@@ -51,10 +51,17 @@ define jvm::jetty($secret,
       mode   => '0755',
     }
 
+    file { "/etc/sudoers.d/${owner}_${name}": 
+      mode    => '0400',
+      owner   => root,
+      group   => root,
+      content => "${owner}   ALL = (root) NOPASSWD: /usr/sbin/service ${name} *\n",
+    }
+
     service { $name:
-      enable => true,
+      enable    => true,
       hasstatus => true,
-      require => File["/etc/init.d/${name}"],
+      require   => File["/etc/init.d/${name}"],
     }
 
   } elsif $ensure == 'absent' {
