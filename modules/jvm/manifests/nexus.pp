@@ -42,4 +42,5 @@ class jvm::nexus($version = "1.9.2.2",
 }
 
 include jvm::nexus
-Jvm::Jdk -> Jvm::Nexus
+Class["jvm::jdk"] -> Class["jvm::nexus"]
+

@@ -3,4 +3,5 @@ class jvm::jdk {
     ensure   => present,
   }
 }
-Jvm::Jre -> Jvm::Jdk
+Class["jvm::jre"] -> Class["jvm::jdk"]
+
