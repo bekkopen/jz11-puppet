@@ -1,6 +1,8 @@
 class jvm::nexus($version = "1.9.2.2",
 				 $prefix  = "/opt",
 				 $arch	  = "linux-x86-32") {
+				 
+  include jvm::jdk
 
   $target  = "nexus-oss-webapp-${version}"
   $dist_url= "http://nexus.sonatype.org/downloads/nexus-oss-webapp-${version}-bundle.tar.gz"
@@ -40,7 +42,4 @@ class jvm::nexus($version = "1.9.2.2",
   }
 
 }
-
-include jvm::nexus
-Class["jvm::jdk"] -> Class["jvm::nexus"]
 
