@@ -1,5 +1,5 @@
 #!/bin/sh
-java_args="-Djetty.port=<%= port %> -Djetty.contextPath=<%= context_path %> -Djetty.shutdownSecret=<%= secret %> <%= jvm_args.join(' ') %>"
+java_args="-Djetty.port=<%= port %> -Djetty.contextPath=<%= context_path %> -Djetty.secret=<%= secret %> -Djetty.workDir=<%= workdir %> <%= jvm_args.join(' ') %>"
 
 cd <%= workdir %>   
 
