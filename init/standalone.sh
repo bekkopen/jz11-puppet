@@ -2,7 +2,7 @@
 #
 # Initialize a new puppet standalone machine
 #
-# export HOSTNAME=demo.muda.no && bash < <(curl -s https://github.com/bekkopen/jz11-puppet/raw/master/init/standalone.sh)
+# export HOSTNAME=demo.muda.no && bash < <(curl -s https://raw.github.com/bekkopen/jz11-puppet/master/init/standalone.sh)
 #
 
 SQUEEZE_REPO="deb http://ukdebian.mirror.anlx.net/debian/ squeeze main contrib"
