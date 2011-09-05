@@ -412,6 +412,23 @@ modules/
       </article>
 
       <article>
+        <h3>Bruk av egendefinerte ressurstyper</h3>
+        <section>
+TODO:
+<pre>jvm::jetty { "demo":
+  domain => "demo.muda.no",
+  root => "/var/www/muda",
+}</pre>
+
+<pre>jvm::jetty { "demo":
+  domain => "demo.muda.no",
+  root => "/var/www/muda",
+}</pre>
+        </section>
+      </article>
+
+
+      <article>
         <h3>Opprette egne ressurstyper med define</h3>
         <section>
 <pre>define nginx::site($domain, $root) {
@@ -430,34 +447,6 @@ modules/
     require => File["/etc/nginx/sites-available/${name}.conf"],
     notify  => Service[nginx],
   }
-}</pre>
-        </section>
-      </article>
-
-      <article>
-        <h3>nginx/templates/site.conf.erb</h3>
-        <section>
-          <pre>
-server {
-  listen 80;
-  server_name &lt;%= domain %&gt;;
-
-  access_log  /var/log/nginx/&lt;%= name %&gt;.access.log;
-
-  location / {
-    root &lt;%= root %&gt;;
-    index  index.html;
-  }
-}</pre>
-        </section>
-      </article>
-
-      <article>
-        <h3>Bruk av egendefinerte ressurstyper</h3>
-        <section>
-<pre>nginx::site { "demo":
-  domain => "demo.muda.no",
-  root => "/var/www/muda",
 }</pre>
         </section>
       </article>
