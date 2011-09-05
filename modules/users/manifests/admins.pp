@@ -12,7 +12,7 @@ class users::admins {
     
     user { "eivind":
         ensure     => present,
-        uid        => 1339,
+        uid        => 1007,
         gid        => users,
         groups     => ["adm", "sudo"],    
         home       => "/home/eivind",
