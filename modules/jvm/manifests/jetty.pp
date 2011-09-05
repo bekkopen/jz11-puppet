@@ -41,6 +41,7 @@ define jvm::jetty($secret,
       notify => Service["${name}"],
       owner => root,
       group => root,
+      mode   => '0755',
     }
 
     service { $name:
