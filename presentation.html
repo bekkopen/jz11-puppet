@@ -289,7 +289,8 @@ exec { "reconfigure-tzdata":
 }</pre>
 
           <pre>
-File["/etc/timezone"] ->  Exec["reconfigure-tzdata"]</pre>
+File["/etc/timezone"] ->  Exec["reconfigure-tzdata"] # requirrequire
+File["/etc/timezone"] ~>  Exec["reconfigure-tzdata"] # subscribe</pre>
         </section>
       </article>
 
@@ -454,6 +455,85 @@ server {
   root => "/var/www/muda",
 }</pre>
         </section>
+      </article>
+
+      <article>
+        <h3>Sammendrag av Puppet DSL</h3>
+
+        <ul>
+          <li>
+            Innebygde ressurstyper
+            <ul>
+              <li>
+                <code>package</code>,
+                <code>user</code>,
+                <code>cron</code>,
+                <code>service</code>,
+                <code>file</code> og
+                <code>exec</code>.
+              </li>
+            </ul>
+          </li>
+          <li>
+            Avhengighter
+            <ul>
+              <li>
+                <code>require</code>,
+                <code>before</code>,
+                <code>subscribe</code> og
+                <code>notify</code>.
+              </li>
+            </ul>
+          </li>
+          <li>
+            Innebygde funksjoner
+            <ul>
+              <li>
+                <code>template()</code>
+              </li>
+            </ul>
+          </li>
+          <li>Klasser (<code>class</code>)</li>
+          <li>Egendefinerte ressurstyper (<code>define</code>)</li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>Mer Puppet DSL</h3>
+
+        <ul>
+          <li>
+            Innebygde ressurstyper
+            <ul>
+              <li>
+                <code>host</code>,
+                <code>ssh_authorized_key</code> og
+                <code>sshkey</code>.
+              </li>
+            </ul>
+          </li>
+          <li>
+            Avhengighter
+            <ul>
+              <li>
+                <code>require</code>,
+                <code>before</code>,
+                <code>subscribe</code> og
+                <code>notify</code>.
+              </li>
+            </ul>
+          </li>
+          <li>
+            Innebygde funksjoner
+            <ul>
+              <li>
+                <code>template()</code>
+              </li>
+            </ul>
+          </li>
+          <li>Klasser (<code>class</code>)</li>
+          <li>Egendefinerte ressurstyper (<code>define</code>)</li>
+        </ul>
       </article>
 
       <article>
