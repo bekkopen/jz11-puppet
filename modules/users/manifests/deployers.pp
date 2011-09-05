@@ -2,6 +2,7 @@ class users::deployers {
 
     user { "deploy":
         ensure     => present,
+        uid        => 2000,
         home       => "/home/deploy",
         managehome => true,
         password   => '$6$xSZZx34H$7Wv2cIRg/MP2BGGp64OOmjxL6vxfl2QxNsmsRylxWsyA4maIp20lot3rw76Bl75DXfqltqDQUwNNWmHSTlEuJ/',

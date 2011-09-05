@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 java_args="-Djetty.port=<%= port %> -Djetty.contextPath=<%= context_path %> -Djetty.secret=<%= secret %> -Djetty.workDir=<%= workdir %> <%= jvm_args.join(' ') %>"
 
-cd <%= workdir %>   
+cd <%= logdir %>
 
 case $1 in    
     start)
@@ -35,6 +35,7 @@ case $1 in
         ;;
     status)
         echo `java ${java_args} -jar <%= exec_jar %> status`
+        exit 0
         ;;
     *)
         ;;      
