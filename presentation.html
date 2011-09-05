@@ -507,19 +507,9 @@ server {
             <ul>
               <li>
                 <code>host</code>,
+                <code>mount</code>,
                 <code>ssh_authorized_key</code> og
                 <code>sshkey</code>.
-              </li>
-            </ul>
-          </li>
-          <li>
-            Avhengighter
-            <ul>
-              <li>
-                <code>require</code>,
-                <code>before</code>,
-                <code>subscribe</code> og
-                <code>notify</code>.
               </li>
             </ul>
           </li>
@@ -527,12 +517,27 @@ server {
             Innebygde funksjoner
             <ul>
               <li>
-                <code>template()</code>
+                <code>inline_template()</code>,
+                <code>file()</code>,
+                <code>regsubst()</code>,
+                <code>split()</code> og
+                <code>versioncmp()</code>.
               </li>
             </ul>
           </li>
-          <li>Klasser (<code>class</code>)</li>
-          <li>Egendefinerte ressurstyper (<code>define</code>)</li>
+          <li>Arrays (<code>["en", "to"]</code>)</li>
+          <li>Hashes (<code>{"n&oslash;kkel" => "verdi", "a" => "b"}</code>)</li>
+          <li>
+            Flytkontroll
+            <ul>
+              <li>
+                <code>case</code> og
+                <code>if/elsif/else</code>.
+              </li>
+            </ul>
+          </li>
+          <li>Virtuelle ressurser (<code>@ressurs { "navn": }</code>)</li>
+          <li>Eksporterte ressurser (<code>@@ressurs { "navn": }</code>)</li>
         </ul>
       </article>
 
