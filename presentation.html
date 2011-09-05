@@ -178,10 +178,10 @@ file { "/etc/vim/vimrc":
         </h3>
         <ul>
           <li>
-            Klient/Server
+            Frittst&aring;ende
           </li>
           <li>
-            Frittst&aring;ende
+            Klient/Server
           </li>
         </ul>
         <dl>
@@ -239,7 +239,7 @@ package { "zsh":
         </section>
         <section>
           <pre>
-puppet apply 0_zsh.pp</pre>
+puppet apply zsh.pp</pre>
         </section>
       </article>
 
@@ -350,7 +350,7 @@ AllowUsers &lt;%= allowed_users.join(" ") %&gt;
       <article>
         <h3>Kjør kode med templates</h3>
         <section>
-          <pre>puppet apply --templatedir=templates 4_templates.pp</pre>
+          <pre>puppet apply --templatedir=templates templates.pp</pre>
         </section>
       </article>
 
@@ -407,7 +407,7 @@ modules/
 
         <h3>Kjør kode med moduler</h3>
         <section>
-          <pre>puppet apply --modulepath=modules 5_nginx.pp</pre>
+          <pre>puppet apply --modulepath=modules nginx.pp</pre>
         </section>
       </article>
 
