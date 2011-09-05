@@ -69,8 +69,4 @@ define jvm::jetty($secret,
   }
 
 }
-jvm::jetty {"demo": 
-	port => 7001, 
-	secret => "abcdefg",
-}
 
