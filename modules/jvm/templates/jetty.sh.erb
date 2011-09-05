@@ -1,7 +1,7 @@
 #!/bin/sh
-java_args="-Djetty.port=<%= port %> -Djetty.contextPath=<%= context %> -Djetty.shutdownSecret=<%= secret %> <%= jvm_args.join(' ') %>"
+java_args="-Djetty.port=<%= port %> -Djetty.contextPath=<%= context_path %> -Djetty.shutdownSecret=<%= secret %> <%= jvm_args.join(' ') %>"
 
-cd <%= workdir %>	
+cd <%= workdir %>   
 
 case $1 in    
     start)
@@ -9,9 +9,9 @@ case $1 in
             echo "Already running"
             exit 0
         fi
-        if [[ -f <%= execjar %> ]]; then
-            echo "Starting jetty"
-            java ${java_args} -jar <%= execjar %> start \
+        if [[ -f <%= exec_jar %> ]]; then
+            echo "Starting <%= name %>"
+            java ${java_args} -jar <%= exec_jar %> start \
                  1><%= logdir %>/stdout.log \
                  2><%= logdir %>/stderr.log &
             pid=$!
@@ -20,8 +20,9 @@ case $1 in
             exit 0
         fi
         ;;
-    stop)    
-        java ${java_args} -jar <%= execjar %> stop
+    stop) 
+        echo "Stopping <%= name %>"
+        java ${java_args} -jar <%= exec_jar %> stop
         sleep 3
         if [[ -f <%= pidfile %> ]]; then
             pid=`cat <%= pidfile %>`
@@ -31,12 +32,12 @@ case $1 in
             echo "Stopped <%= name %> with pid: ${pid}"
         fi
         exit 0
-    	;;
+        ;;
     status)
-	    echo `java ${java_args} -jar <%= execjar %> status`
-    	;;
-	*)
-		;;		
+        echo `java ${java_args} -jar <%= exec_jar %> status`
+        ;;
+    *)
+        ;;      
 esac
 
 echo "Usage: $0 <start|stop|status>"

@@ -1,19 +1,22 @@
 define jvm::jetty($secret,
-				  $port,
-				  $context="/",
-				  $prefix="/var/apps",
-				  $owner="deploy",
-				  $group="users",
-				  $ensure="present",
-				  $run_prefix="/var/run",
-				  $log_prefix="/var/log",
-				  $jvm_args=[]) {
+                  $port,
+				  $ensure=present,
+                  $context_path="/",
+                  $prefix="/var/apps",
+                  $owner="deploy",
+                  $group="users",
+                  $ensure="present",
+                  $run_prefix="/var/run",
+                  $log_prefix="/var/log",
+                  $jvm_args=[]) {
 
-  $pidfile=${run_prefix}/${name}.pid
-  $workdir=${log_prefix}/${name}
-  $logdir=${log_prefix}/${name}
-  $appdir=${prefix}/${name}
-  $execjar=${appdir}/${name}
+			notice("dbg: ${run_prefix} ... ${name}")
+
+  $pidfile="${run_prefix}/${name}.pid"
+  $workdir="${log_prefix}/${name}"
+  $logdir="${log_prefix}/${name}"
+  $appdir="${prefix}/${name}"
+  $exec_jar="${appdir}/${name}.jar"
 
   if $ensure == 'present' {
     file { $workdir:
@@ -29,28 +32,27 @@ define jvm::jetty($secret,
     }
    
     file { "/etc/init.d/${name}":
-	  ensure => present,
-	  content => template("jetty.sh.erb"),
-	  notify => Service["${name}"],
+      ensure => present,
+      content => template("jetty.sh.erb"),
+      notify => Service["${name}"],
       owner => root,
       group => root,
     }
 
-	service { $name:
-		ensure => running,
-		hasstatus => true,
-		require => File["/etc/init.d/${name}"],
-		subscribe => File["$execjar"],
-	}
-	
+    service { $name:
+      ensure => enabled,
+      hasstatus => true,
+      require => File["/etc/init.d/${name}"],
+    }
+    
   } elsif $ensure == 'absent' {
-	service { $name:
-		ensure => stopped,
-	}
+    service { $name:
+      ensure => stopped,
+    }
 
     file { $pidfile:
-	  ensure => absent,
-	}
+      ensure => absent,
+    }
 
     file { $appdir:
       ensure => absent,
@@ -62,8 +64,13 @@ define jvm::jetty($secret,
     }
 
     file { "/etc/init.d/${name}":
-	  ensure => absent,
-	}
+      ensure => absent,
+    }
   }
 
 }
+jvm::jetty {"demo": 
+	port => 7001, 
+	secret => "abcdefg",
+}
+
