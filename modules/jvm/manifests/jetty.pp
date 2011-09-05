@@ -40,7 +40,7 @@ define jvm::jetty($secret,
     }
 
     service { $name:
-      ensure => present,
+      enabled => true,
       hasstatus => true,
       require => File["/etc/init.d/${name}"],
     }
