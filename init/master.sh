@@ -2,8 +2,13 @@
 #
 # Initialize a new puppet master
 #
-# bash < <(curl -s https://github.com/bekkopen/jz11-puppet/raw/master/init/master.sh)
+# bash < <(curl -s https://raw.github.com/bekkopen/jz11-puppet/master/init/master.sh)
 #
+
+if [[ -z $HOSTNAME ]]; then
+  echo "ERROR: You need to export HOSTNAME=desired.fqdn.host"
+  exit 1
+fi
 
 SQUEEZE_REPO="deb http://ukdebian.mirror.anlx.net/debian/ squeeze main contrib"
 
@@ -15,9 +20,6 @@ APT {
 EOF
 
 PUBLIC_IP_ADDRESS=`ifconfig eth0 | awk -F':' '/inet addr/{split($2,_," ");print _[1]}'`
-
-echo "Hostname (FQDN):"
-read HOSTNAME
 
 echo $HOSTNAME > /etc/hostname && hostname -F /etc/hostname
 echo $PUBLIC_IP_ADDRESS `hostname` `hostname -s` >> /etc/hosts
