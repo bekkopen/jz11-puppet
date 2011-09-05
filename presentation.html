@@ -222,7 +222,7 @@ file { "/etc/vim/vimrc":
         <h3>
           Puppet arkitektur
         </h3>
-        <ul>
+        <ul class='build'>
           <li>
             Frittst&aring;ende
           </li>
@@ -230,6 +230,7 @@ file { "/etc/vim/vimrc":
             Klient/Server
           </li>
         </ul>
+        <div class='build'>
         <dl>
           <dt>
           Kj&oslash;rer p&aring;:
@@ -250,6 +251,7 @@ file { "/etc/vim/vimrc":
           Windows (ekstremt eksperimentell)
           </dd>
         </dl>
+        </div>
       </article>
 
       <article>
@@ -460,15 +462,14 @@ modules/
       <article>
         <h3>Bruk av egendefinerte ressurstyper</h3>
         <section>
-TODO:
-<pre>jvm::jetty { "demo":
-  domain => "demo.muda.no",
-  root => "/var/www/muda",
+<pre>jvm::jetty { "sporing":
+  port   => 9000, 
+  secret => "31d83902b0408579c2b974cc3274aabf",
 }</pre>
 
-<pre>jvm::jetty { "demo":
-  domain => "demo.muda.no",
-  root => "/var/www/muda",
+<pre>jvm::jetty { "booking": 
+  port   => 9001, 
+  secret => "2f0cb27e5c27729396066b60e0f242ed",
 }</pre>
         </section>
       </article>
@@ -477,25 +478,50 @@ TODO:
       <article>
         <h3>Opprette egne ressurstyper med define</h3>
         <section>
-<pre>define nginx::site($domain, $root) {
-  file { $root:
-    ensure  => directory,
-  }
-  file { "/etc/nginx/sites-available/${name}.conf":
-    ensure  => present,
-    content => template("nginx/site.conf.erb"),
-    require => File[$root],
-    notify  => Service[nginx],
-  }
-  file { "/etc/nginx/sites-enabled/${name}.conf":
-    ensure  => link,
-    target  => "/etc/nginx/sites-available/${name}.conf",
-    require => File["/etc/nginx/sites-available/${name}.conf"],
-    notify  => Service[nginx],
-  }
-}</pre>
+<pre>define jvm::jetty($secret,
+                  $port,
+                  $ensure=present,
+                  $context_path="/",
+                  $prefix="/var/apps",
+                  $owner="deploy",
+                  $group="users",   
+                  $run_prefix="/var/run",
+                  $log_prefix="/var/log",
+                  $cache_prefix="/var/cache",
+                  $jvm_args=[]) {
+
+  $appdir="${prefix}/${name}"
+  $workdir="${cache_prefix}/${name}"
+  $logdir="${log_prefix}/${name}"
+  $pidfile="${run_prefix}/${name}.pid"
+
+  #...</pre>
         </section>
       </article>
+
+      <article>
+        <h3>Opprette egne ressurstyper med define (forts.)</h3>
+        <section>
+<pre>if $ensure == 'present' {
+  file { $prefix:
+    ensure => directory,
+  }  
+
+  # ...
+  
+  file { "/etc/init.d/${name}":
+    ensure => present,
+    content => template("jvm/jetty.sh.erb"),
+    notify => Service["${name}"],
+    owner => root,
+    group => root,
+    mode   => '0755',
+  }  
+  
+</pre>
+        </section>
+      </article>
+
 
       <article>
         <h3>Sammendrag av Puppet DSL</h3>
