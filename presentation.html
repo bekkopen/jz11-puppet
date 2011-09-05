@@ -287,7 +287,7 @@ exec { "reconfigure-tzdata":
 }</pre>
 
           <pre>
-File["/etc/timezone"] ->  Exec["reconfigure-tzdata"] # requirrequire
+File["/etc/timezone"] ->  Exec["reconfigure-tzdata"] # require
         </section>
       </article>
 
