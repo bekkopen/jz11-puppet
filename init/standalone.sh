@@ -2,7 +2,7 @@
 #
 # Initialize a new puppet standalone machine
 #
-# bash < <(curl -s https://github.com/bekkopen/jz11-puppet/raw/master/init/standalone.sh)
+# export HOSTNAME=demo.muda.no && bash < <(curl -s https://github.com/bekkopen/jz11-puppet/raw/master/init/standalone.sh)
 #
 
 SQUEEZE_REPO="deb http://ukdebian.mirror.anlx.net/debian/ squeeze main contrib"
@@ -15,9 +15,6 @@ APT {
 EOF
 
 PUBLIC_IP_ADDRESS=`ifconfig eth0 | awk -F':' '/inet addr/{split($2,_," ");print _[1]}'`
-
-echo "Hostname (FQDN):"
-read HOSTNAME
 
 echo $HOSTNAME > /etc/hostname && hostname -F /etc/hostname
 echo $PUBLIC_IP_ADDRESS `hostname` `hostname -s` >> /etc/hosts
