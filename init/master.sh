@@ -40,9 +40,6 @@ if [[ -z "$(grep bekkopen/jz11-puppet.git /etc/puppet/.git/config)" ]]; then
   cd -
 fi
 
-echo "server=mgmt.muda.no" >> /etc/puppet/puppet.conf
-echo "trace=true" >> /etc/puppet/puppet.conf
-
 touch /etc/puppet/initialized
 
 exit 0
