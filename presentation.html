@@ -289,7 +289,8 @@ exec { "reconfigure-tzdata":
 }</pre>
 
           <pre>
-File["/etc/timezone"] ->  Exec["reconfigure-tzdata"]</pre>
+File["/etc/timezone"] ->  Exec["reconfigure-tzdata"] # requirrequire
+File["/etc/timezone"] ~>  Exec["reconfigure-tzdata"] # subscribe</pre>
         </section>
       </article>
 
@@ -457,6 +458,85 @@ server {
       </article>
 
       <article>
+        <h3>Sammendrag av Puppet DSL</h3>
+
+        <ul>
+          <li>
+            Innebygde ressurstyper
+            <ul>
+              <li>
+                <code>package</code>,
+                <code>user</code>,
+                <code>cron</code>,
+                <code>service</code>,
+                <code>file</code> og
+                <code>exec</code>.
+              </li>
+            </ul>
+          </li>
+          <li>
+            Avhengighter
+            <ul>
+              <li>
+                <code>require</code>,
+                <code>before</code>,
+                <code>subscribe</code> og
+                <code>notify</code>.
+              </li>
+            </ul>
+          </li>
+          <li>
+            Innebygde funksjoner
+            <ul>
+              <li>
+                <code>template()</code>
+              </li>
+            </ul>
+          </li>
+          <li>Klasser (<code>class</code>)</li>
+          <li>Egendefinerte ressurstyper (<code>define</code>)</li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>Mer Puppet DSL</h3>
+
+        <ul>
+          <li>
+            Innebygde ressurstyper
+            <ul>
+              <li>
+                <code>host</code>,
+                <code>mount</code>,
+                <code>ssh_authorized_key</code> og
+                <code>sshkey</code>.
+              </li>
+            </ul>
+          </li>
+          <li>
+            Innebygde funksjoner
+            <ul>
+              <li>
+                <code>inline_template()</code>,
+                <code>file()</code>,
+                <code>regsubst()</code>,
+                <code>split()</code> og
+                <code>versioncmp()</code>.
+              </li>
+            </ul>
+          </li>
+          <li>Arrays (<code>["en", "to"]</code>)</li>
+          <li>Hashes (<code>{"n&oslash;kkel" => "verdi", "a" => "b"}</code>)</li>
+          <li>
+            Flytkontroll (<code>case</code> og
+            <code>if/elsif/else</code>)
+          </li>
+          <li>Virtuelle ressurser (<code>@ressurs { "navn": }</code>)</li>
+          <li>Eksporterte ressurser (<code>@@ressurs { "navn": }</code>)</li>
+        </ul>
+      </article>
+
+      <article>
         <h3>Klient / Server (puppet agent / puppet master)</h3>
         <ul>
           <li>Én Puppet-master (server)</li>
@@ -485,8 +565,9 @@ node webserver {
 }
 node appserver {
   include java
-  java::jetty::standalone { "example":
-    root => "/var/apps/example",
+  jvm::jetty { "example":
+    secret => "fe9dee1f3a0c22dfff0aec9838f7e70e",
+    port => 9000,
   }
 }
 node "web1.muda.no" inherits webserver
@@ -532,6 +613,12 @@ notify{"The value is: ${yourvar}": } # Log til klient</pre></code>
         </p>
       </article>
 
+      <article style="background: url(images/question.jpg) 0 0 no-repeat;">
+        <div class='source'>
+          Source: http://flic.kr/p/ubG6g
+        </div>
+      </article>
+
       <article>
         <h3>
           Slides og kode
@@ -541,12 +628,6 @@ notify{"The value is: ${yourvar}": } # Log til klient</pre></code>
             github.com/bekkopen/jz11-puppet
           </a>
         </p>
-      </article>
-
-      <article style="background: url(images/question.jpg) 0 0 no-repeat;">
-        <div class='source'>
-          Source: http://flic.kr/p/ubG6g
-        </div>
       </article>
 
   </body>
