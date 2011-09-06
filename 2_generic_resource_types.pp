@@ -4,4 +4,5 @@ file { "/etc/timezone":
 
 exec { "reconfigure-tzdata":
   command => "/usr/sbin/dpkg-reconfigure -f noninteractive tzdata",
+  before => File["/etc/timezone"], # Only for demo purposes
 }
