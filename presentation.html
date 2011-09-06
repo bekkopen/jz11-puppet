@@ -301,17 +301,17 @@ package { "zsh":
 
       <article>
         <h3>Frittstående bruk</h3>
-        <section>
+        <section class="build">
           <pre>apt-get install puppet</pre>
         </section>
-        <section>
+        <section class="build">
           <pre>
 # zsh.pp
 package { "zsh":
   ensure => present,
 }</pre>
         </section>
-        <section>
+        <section class="build">
           <pre>
 puppet apply zsh.pp</pre>
         </section>
@@ -334,6 +334,8 @@ cron { "poor-mans-http-ping":
   command => "curl -s http://wasitup.com/ > /dev/null 2>&amp;1",
   minute  => "*/1", # Sjekk hvert minutt
 }</pre>
+        </section>
+        <section class="build">
           <pre>
 puppet apply resource_types.pp</pre>
         </section>
@@ -355,6 +357,8 @@ file { "/etc/timezone":
 exec { "reconfigure-tzdata":
   command => "/usr/sbin/dpkg-reconfigure -f noninteractive tzdata",
 }</pre>
+        </section>
+        <section class="build">
           <pre>
 puppet apply generic_resource_types.pp</pre>
         </section>
@@ -374,10 +378,12 @@ exec { "reconfigure-tzdata":
   command => "/usr/sbin/dpkg-reconfigure -f noninteractive tzdata",
   require => File["/etc/timezone"],
 }</pre>
-
+        </section>
+        <section class="build">
           <pre>
 File["/etc/timezone"] ->  Exec["reconfigure-tzdata"] # require</pre>
-
+        </section>
+        <section class="build">
           <pre>
 puppet apply dependencies.pp</pre>
         </section>
@@ -424,6 +430,8 @@ service { "ssh":
   subscribe => File["/etc/ssh/sshd_config"],
 }</pre>
 
+        </section>
+        <section class="build">
           <pre>puppet apply --templatedir=templates templates.pp</pre>
         </section>
       </article>
@@ -479,9 +487,7 @@ class nginx {
 # nginx.pp
 include nginx</pre>
         </section>
-
-        <h3>Kjør kode med moduler</h3>
-        <section>
+        <section class="build">
           <pre>puppet apply --modulepath=modules nginx.pp</pre>
         </section>
       </article>
@@ -655,7 +661,7 @@ include nginx</pre>
             </article>
 
             <article>
-              <h3>Konfigurasjon</h3>
+              <h3>Konfigurasjon av flere maskiner</h3>
               <section>
                 <pre>
       node webserver {
