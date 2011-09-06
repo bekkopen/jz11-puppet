@@ -321,6 +321,7 @@ puppet apply zsh.pp</pre>
         <h3>Ulike ressurstyper</h3>
         <section>
         <pre>
+# resource_types.pp
 user { "oc":
   ensure     => present,
   uid        => 1337,
@@ -333,6 +334,8 @@ cron { "poor-mans-http-ping":
   command => "curl -s http://wasitup.com/ > /dev/null 2>&amp;1",
   minute  => "*/1", # Sjekk hvert minutt
 }</pre>
+          <pre>
+puppet apply resource_types.pp</pre>
         </section>
       </article>
 
@@ -344,6 +347,7 @@ cron { "poor-mans-http-ping":
         </p>
         <section>
           <pre>
+# generic_resource_types.pp
 file { "/etc/timezone":
   content => "Europe/Oslo\n",
 }
@@ -351,6 +355,8 @@ file { "/etc/timezone":
 exec { "reconfigure-tzdata":
   command => "/usr/sbin/dpkg-reconfigure -f noninteractive tzdata",
 }</pre>
+          <pre>
+puppet apply generic_resource_types.pp</pre>
         </section>
       </article>
 
@@ -359,6 +365,7 @@ exec { "reconfigure-tzdata":
         <p><code>require</code> / <code>before</code> og <code>notify</code> / <code>subscribe</code>
         <section>
           <pre>
+# dependencies.pp
 file { "/etc/timezone":
   content => "Europe/Oslo\n",
 }
@@ -369,38 +376,18 @@ exec { "reconfigure-tzdata":
 }</pre>
 
           <pre>
-File["/etc/timezone"] ->  Exec["reconfigure-tzdata"] # require
+File["/etc/timezone"] ->  Exec["reconfigure-tzdata"] # require</pre>
+
+          <pre>
+puppet apply dependencies.pp</pre>
         </section>
       </article>
 
       <article>
         <h3>Templater og variabler</h3>
         <section>
-          <pre>
-$port = 22
-$allowed_users = ["eivind", "oc"] # Tillat innlogging
-
-package { "openssh-server":
-  ensure => present,
-}
-
-file { "/etc/ssh/sshd_config":
-  content => template("sshd_config.erb"),
-  require => Package["openssh-server"],
-}
-
-service { ssh:
-  ensure    => running,
-  hasstatus => true,
-  subscribe => [Package["openssh-server"],
-                File["/etc/ssh/sshd_config"]],
-}</pre>
-        </section>
-      </article>
-      <article>
-        <h3>templates/sshd_config.erb</h3>
-        <section>
 <pre>
+# templates/sshd_config.erb
 Port &lt;%= port %&gt;
 
 Protocol 2
@@ -415,16 +402,50 @@ PermitRootLogin no
 &lt;% if allowed_users.any? %&gt;
 AllowUsers &lt;%= allowed_users.join(" ") %&gt;
 &lt;% end %&gt;
-
-...
 </pre>
+        </section>
+      </article>
+      <article>
+        <section>
+          <pre>
+# ssh.pp
+$port = 22
+$allowed_users = ["eivind", "oc"] # Tillat innlogging
+
+package { "openssh-server": ensure => present }
+
+file { "/etc/ssh/sshd_config":
+  content => template("sshd_config.erb"),
+  require => Package["openssh-server"],
+}
+
+service { "ssh":
+  ensure    => running,
+  subscribe => File["/etc/ssh/sshd_config"],
+}</pre>
+
+          <pre>puppet apply --templatedir=templates templates.pp</pre>
         </section>
       </article>
 
       <article>
-        <h3>Kjør kode med templates</h3>
+        <h3>Moduler</h3>
+        <p>Den foretrukne m&aring;ten &aring; strukturere konfigurasjon på er å plassere det i moduler.</p>
         <section>
-          <pre>puppet apply --templatedir=templates templates.pp</pre>
+<pre>
+modules/
+    nginx/
+      manifests/
+        init.pp
+      files/
+        nginx.conf
+      templates/
+        site.conf.erb
+    jvm/
+      ...
+    ssh
+      ...
+</pre>
         </section>
       </article>
 
@@ -452,31 +473,11 @@ class nginx {
       </article>
 
       <article>
-        <h3>Moduler</h3>
-        <p>Den foretrukne m&aring;ten &aring; strukturere konfigurasjon på er å plassere det i moduler.</p>
-        <section>
-<pre>
-modules/
-    nginx/
-      manifests/
-        init.pp
-      files/
-        nginx.conf
-      templates/
-        site.conf.erb
-    jvm/
-      manifests/
-        init.pp
-        jdk.pp
-        jetty.pp
-</pre>
-        </section>
-      </article>
-
-      <article>
         <h3>Bruk av klasser</h3>
         <section>
-          <pre>include nginx</pre>
+	  <pre>
+# nginx.pp
+include nginx</pre>
         </section>
 
         <h3>Kjør kode med moduler</h3>
