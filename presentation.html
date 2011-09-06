@@ -653,6 +653,15 @@ include nginx</pre>
         </ul>
       </article>
 
+      <article>
+        <p>Agenter har ikke tilgang til kildekoden for konfigurasjonen:</p>
+        <ol>
+          <li>Agent identifiserer seg og forespør en konfigurasjonskatalog fra master</li>
+          <li>Master kompilerer en oppdatert konfigurasjonskatalog og sender til agent</li>
+          <li>Agent pakker opp konfigurasjonskatalogen som ender opp i kjørbar konfigurasjon</li>
+        </ol>
+      </article>
+      
       <article style="background: url(images/juggler.jpg) 0 0 no-repeat;">
         <h1 style="color: #fff; margin-top: 50px;">
           Demo
@@ -662,39 +671,6 @@ include nginx</pre>
         </div>
       </article>
 
-            <article>
-              <h3>Typisk klient / server oppsett</h3>
-              <section>
-                <img src="images/diagram.png" style="width: 100%; margin-top: 50px;">
-              </section>
-            </article>
-
-            <article>
-              <h3>Konfigurasjon av flere maskiner</h3>
-              <section>
-                <pre>
-      node webserver {
-        include nginx
-        nginx::site { "muda":
-          domain => "www.muda.no",
-          root => "/var/www/muda.no",
-        }
-      }
-      node appserver {
-        include java
-        jvm::jetty { "example":
-          secret => "fe9dee1f3a0c22dfff0aec9838f7e70e",
-          port => 9000,
-        }
-      }
-      node "web1.muda.no" inherits webserver
-      node "app1.muda.no" inherits appserver
-      node "app2.muda.no" inherits appserver
-      </pre>
-              </section>
-            </article>
-
-      
       <article>
         <h3>
           Behov
@@ -714,6 +690,39 @@ include nginx</pre>
           <dd>app1 (Jetty app server)
         </dl>
       </article>
+      
+      <article>
+        <h3>Typisk klient / server oppsett</h3>
+        <section>
+          <img src="images/diagram.png" style="width: 100%; margin-top: 50px;">
+        </section>
+      </article>
+
+      <article>
+        <h3>Konfigurasjon av flere maskiner</h3>
+        <section>
+          <pre>
+node webserver {
+  include nginx
+  nginx::site { "muda":
+    domain => "www.muda.no",
+    root => "/var/www/muda.no",
+  }
+}
+node appserver {
+  include java
+  jvm::jetty { "example":
+    secret => "fe9dee1f3a0c22dfff0aec9838f7e70e",
+    port => 9000,
+  }
+}
+node "web1.muda.no" inherits webserver
+node "app1.muda.no" inherits appserver
+node "app2.muda.no" inherits appserver
+</pre>
+        </section>
+      </article>
+
       
       <article>
         <h3>
@@ -741,15 +750,6 @@ include nginx</pre>
         </ul>
       </article>
 
-      <article>
-        <p>Agenter har ikke tilgang til kildekoden for konfigurasjonen:</p>
-        <ol>
-          <li>Agent identifiserer seg og forespør en konfigurasjonskatalog fra master</li>
-          <li>Master kompilerer en oppdatert konfigurasjonskatalog og sender til agent</li>
-          <li>Agent pakker opp konfigurasjonskatalogen som ender opp i kjørbar konfigurasjon</li>
-        </ol>
-      </article>
-      
       <article>
         <h3>
           Bootstrappe app1
