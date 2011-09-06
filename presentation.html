@@ -687,16 +687,23 @@ include nginx</pre>
 
       
       <article>
-        <h1>
-          Behov: en applikasjon for å håndtere RSVPs for ymse arrangementer
-        </h1>
+        <h3>
+          Behov
+        </h3>
         <p>
-          * Applikasjon: Play MVC, jetty-pkg, PostgreSQL.
-          * 3 servere: 
-            - mgmt (master, nexus, ...)
-            - web1 (nginx)
-            - app1 (jetty exec)          
+          En applikasjon for å håndtere RSVPs for forskjellige arrangementer
         </p>
+        <dl class="build">
+          <dt>Applikasjon
+          <dd>Play MVC
+          <dd>jetty-pkg
+          <dd>PostgreSQL
+
+          <dt>Servere
+          <dd>mgmt (Puppet Master, Nexus)
+          <dd>web1 (Nginx proxy mot app server)
+          <dd>app1 (Jetty app server)
+        </dl>
       </article>
       
       <article>
