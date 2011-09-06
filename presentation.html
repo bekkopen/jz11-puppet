@@ -95,7 +95,40 @@
         <q class="question">
             Har rot i milj&oslash;ene?
         </q>
-      </article>            
+      </article>
+      
+      <article>
+        <h3>
+          Kontinuerlige leveranser
+        </h3>
+        <ul class="build">
+          <li>Raskere og alltid klar til produksjonssetting</li>
+          <li>Nedbryting av siloer og bedre kommunikasjon</li>
+          <li>Automatisering</li>
+          <li>Infrastruktur som kode</li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>
+          Infrastruktur som kode
+        </h3>
+        <ul class="build">
+          <li>Dokumentasjon</li>
+          <li>Reproduserbarhet</li>
+          <li>Homogene miljøer</li>
+          <li>Kontinuerlig integrasjon &amp; "ren kode" for drift</li>
+        </ul>
+      </article>
+
+      <article style="background: #fff url(images/cowboy3.jpg) 50px 10px no-repeat;">
+        <h1 style="color: #fff; margin-top: 10px; margin-left: 450px; text-align: right;">
+          Ingen Cowboy-virksomhet!
+        </h1>
+        <div class='source'>
+          http://flic.kr/p/6cdm8
+        </div>
+      </article>
       
       <article>
         <h3>
@@ -118,17 +151,6 @@
           MacBookPro/Air med Puppet.
         </p>
         </div>
-      </article>
-
-      <article>
-        <h3>
-          Infrastruktur som kode
-        </h3>
-        <ul class="build">
-          <li>
-            
-          </li>
-        </ul>
       </article>
 
       <article>
@@ -643,15 +665,6 @@ node "app2.muda.no" inherits appserver
         </section>
       </article>
 
-      <article>
-        <p>Agenter har ikke tilgang til kildekoden for konfigurasjonen:</p>
-        <ol>
-          <li>Agent identifiserer seg og forespør en konfigurasjonskatalog fra master</li>
-          <li>Master kompilerer en oppdatert konfigurasjonskatalog og sender til agent</li>
-          <li>Agent pakker opp konfigurasjonskatalogen som ender opp i kjørbar konfigurasjon</li>
-        </ol>
-      </article>
-
       <article style="background: url(images/juggler.jpg) 0 0 no-repeat;">
         <h1 style="color: #fff; margin-top: 50px;">
           Demo
@@ -663,10 +676,10 @@ node "app2.muda.no" inherits appserver
       
       <article>
         <h1>
-          TODO:
+          Behov: en applikasjon for å håndtere RSVPs for ymse arrangementer
         </h1>
         <p>
-          * Deploy RSVP applikasjon
+          * Applikasjon: Play MVC, jetty-pkg, PostgreSQL.
           * 3 servere: 
             - mgmt (master, nexus, ...)
             - web1 (nginx)
@@ -698,6 +711,15 @@ node "app2.muda.no" inherits appserver
           * Bootstrap
           * Webserver, bad gateway..
         </p>
+      </article>
+
+      <article>
+        <p>Agenter har ikke tilgang til kildekoden for konfigurasjonen:</p>
+        <ol>
+          <li>Agent identifiserer seg og forespør en konfigurasjonskatalog fra master</li>
+          <li>Master kompilerer en oppdatert konfigurasjonskatalog og sender til agent</li>
+          <li>Agent pakker opp konfigurasjonskatalogen som ender opp i kjørbar konfigurasjon</li>
+        </ol>
       </article>
       
       <article>
