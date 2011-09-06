@@ -637,38 +637,6 @@ modules/
         </ul>
       </article>
 
-      <article>
-        <h3>Typisk klient / server oppsett</h3>
-        <section>
-          <img src="images/puppet-arch.png">
-        </section>
-      </article>
-
-      <article>
-        <h3>manifests/nodes.pp</h3>
-        <section>
-          <pre>
-node webserver {
-  include nginx
-  nginx::site { "muda":
-    domain => "www.muda.no",
-    root => "/var/www/muda.no",
-  }
-}
-node appserver {
-  include java
-  jvm::jetty { "example":
-    secret => "fe9dee1f3a0c22dfff0aec9838f7e70e",
-    port => 9000,
-  }
-}
-node "web1.muda.no" inherits webserver
-node "app1.muda.no" inherits appserver
-node "app2.muda.no" inherits appserver
-</pre>
-        </section>
-      </article>
-
       <article style="background: url(images/juggler.jpg) 0 0 no-repeat;">
         <h1 style="color: #fff; margin-top: 50px;">
           Demo
@@ -677,6 +645,39 @@ node "app2.muda.no" inherits appserver
           Source: http://flic.kr/p/2fiWvK
         </div>
       </article>
+
+            <article>
+              <h3>Typisk klient / server oppsett</h3>
+              <section>
+                <img src="images/puppet-arch.png">
+              </section>
+            </article>
+
+            <article>
+              <h3>Konfigurasjon</h3>
+              <section>
+                <pre>
+      node webserver {
+        include nginx
+        nginx::site { "muda":
+          domain => "www.muda.no",
+          root => "/var/www/muda.no",
+        }
+      }
+      node appserver {
+        include java
+        jvm::jetty { "example":
+          secret => "fe9dee1f3a0c22dfff0aec9838f7e70e",
+          port => 9000,
+        }
+      }
+      node "web1.muda.no" inherits webserver
+      node "app1.muda.no" inherits appserver
+      node "app2.muda.no" inherits appserver
+      </pre>
+              </section>
+            </article>
+
       
       <article>
         <h1>
