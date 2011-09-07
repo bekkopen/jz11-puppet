@@ -660,27 +660,7 @@ include nginx</pre>
         <div class='source'>
           Source: http://flic.kr/p/2fiWvK
         </div>
-      </article>
-
-      <article>
-        <h3>
-          Behov
-        </h3>
-        <p>
-          En applikasjon for å håndtere RSVPs for forskjellige arrangementer
-        </p>
-        <dl class="build">
-          <dt>Applikasjon
-          <dd>Play MVC
-          <dd>jetty-pkg
-          <dd>PostgreSQL
-
-          <dt>Servere
-          <dd>mgmt (Puppet Master, Nexus)
-          <dd>web1 (Nginx proxy mot app server)
-          <dd>app1 (Jetty app server og PostgreSQL database)
-        </dl>
-      </article>
+      </article>      
       
       <article>
         <h3>Typisk klient / server oppsett</h3>
@@ -688,70 +668,98 @@ include nginx</pre>
           <img src="images/diagram.png" style="width: 100%; margin-top: 50px;">
         </section>
       </article>
+      
+      <article>
+        <h3>
+          Behov
+        </h3>
+        <p>
+          En applikasjon for å håndtere RSVPs for forskjellige arrangementer
+        </p>
+        <div class="build">
+          <img src="images/sketch.png" style="width: 100%; margin-top: 50px;">
+        </div>
+      </article>
+      
+      <article>
+        <section>
+          <h3>
+            Applikasjon
+          </h3>
+          <div class="build">
+            <img src="images/application.png" style="width: 100%; margin-top: 50px;">
+          </div>
+          
+        </section>
+      </article>      
 
+      <article>
+        <section>
+          <h3>
+            Servere
+          </h3>
+          <div class="build">
+            <img src="images/servers.png" style="width: 100%; margin-top: 50px;">
+          </div>
+          
+        </section>
+      </article>               
+          
       <article>
         <h3>Konfigurasjon av flere maskiner</h3>
         <section>
           <pre>
-node webserver {
+node "web1.muda.no" {
   include nginx
   nginx::site { "muda":
     domain => "www.muda.no",
     root => "/var/www/muda.no",
   }
 }
-node appserver {
-  include java
-  jvm::jetty { "example":
+node "app1.muda.no" {
+  include jvm
+  jvm::jetty { "demo":
     secret => "fe9dee1f3a0c22dfff0aec9838f7e70e",
     port => 9000,
   }
 }
-node "web1.muda.no" inherits webserver
-node "app1.muda.no" inherits appserver
-node "app2.muda.no" inherits appserver
+node "mgmt.muda.no" {
+  include jvm
+  includ jvm::nexus
+}
 </pre>
         </section>
       </article>
 
+      <article>
+        <section>
+          <h3>
+            Provisjonering...
+          </h3>
+          <div class="build">
+            <img src="images/diagram2.png" style="width: 100%; margin-top: 50px;">
+          </div>
+          
+        </section>
+      </article>
       
       <article>
-        <h3>
-          Bootstrappe mgmt
-        </h3>
-        <ul>
-          <li>Har installert puppetmaster og git</li>
-          <li>Ingen java og ingen nexus</li>
-          <li>Bootstrap</li>
-          <li>java &amp; nexus -> kan bygge og deploye demo</li>
-        </ul>
-      </article>
-
-      <article>
-        <h3>
-          Bootstrappe web1
-        </h3>
-        <ul>
-          <li>Har allerede installert puppet</li>
-          <li>cert request</li>
-          <li>godkjenne cert</li>
-          <li>Ingen webserver</li>
-          <li>Bootstrap</li>
-          <li>Webserver, bad gateway..</li>
-        </ul>
-      </article>
-
-      <article>
-        <h3>
-          Bootstrappe app1
-        </h3>
-        <ul>
-          <li>Har allerede installert puppet</li>
-          <li>Ingen java</li>
-          <li>Bootstrap</li>
-          <li>deploy app (pull fra nexus)</li>
-          <li>Vis applikasjon, lag event, registrer to deltakere</li>
-        </ul>
+        <section>
+          <h3>
+            Deploy
+          </h3>
+          <center>
+            <div class="build">
+              <img src="images/deploy_to_nexus.png" style="margin-top: 50px;">
+            </div>
+            <div class="build">
+              <img src="images/deploy_to_production.png" style="margin-top: 10px;">
+            </div>
+            <div class="build">
+              <img src="images/pull_from_nexus.png" style="margin-top: 10px; ">
+            </div>
+          </center>
+        </section>
       </article>
       
       <!--
